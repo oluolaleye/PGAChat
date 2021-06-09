@@ -1,4 +1,4 @@
-const _ = require(`lodash`);
+const _ = require('lodash')
 // Given an array of players
 // returns a sorted array of teams with the total team points for active players.
 // The output is sorted in descending order by points
@@ -6,19 +6,22 @@ const _ = require(`lodash`);
 // output: [{ team: 'green', points: 40 }, ...]
 
 module.exports = (players) => {
-  const activePlayers = _.filter(players, { isActive: true });
+  // filter input to get only active players
+  const activePlayers = _.filter(players, { isActive: true })
 
-  let unSortedPlayers = _(activePlayers)
-    .groupBy(`team`)
+  // group players by team and return aggregated players point by team
+  const unSortedPlayers = _(activePlayers)
+    .groupBy('team')
     .map((player, key) => {
       return {
         team: key,
-        points: _.sumBy(player, `points`),
-      };
+        points: _.sumBy(player, 'points')
+      }
     })
-    .value();
+    .value()
 
-  const sortedPlayers = _.orderBy(unSortedPlayers, [`points`], [`desc`]);
+  // sort team array by points in a descending order
+  const sortedPlayers = _.orderBy(unSortedPlayers, ['points'], ['desc'])
 
-  return sortedPlayers;
-};
+  return sortedPlayers
+}
